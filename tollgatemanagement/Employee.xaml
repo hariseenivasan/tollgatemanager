@@ -1,0 +1,145 @@
+﻿<!--Author: Sri Hari Haran Seenivasan
+    Page: Employee or Ticket collector's view
+    Pending activity: UX, when window closed, show the login-->
+<Window x:Name="wndwCollector" x:Class="tollgatemanagement.Employee"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:tollgatemanagement"
+        mc:Ignorable="d"
+        Title="Collector" Height="533.909" Width="886.248" Loaded="wndwCollector_Loaded">
+    <Window.Resources>
+        <local:Database1DataSet x:Key="database1DataSet"/>
+        <CollectionViewSource x:Key="viewViewSource" Source="{Binding View, Source={StaticResource database1DataSet}}"/>
+        <CollectionViewSource x:Key="passReciptDetailsViewSource" Source="{Binding PassReciptDetails, Source={StaticResource database1DataSet}}"/>
+        <CollectionViewSource x:Key="tollAreaViewSource" Source="{Binding TollArea, Source={StaticResource database1DataSet}}"/>
+        <CollectionViewSource x:Key="passTypeViewSource" Source="{Binding PassType, Source={StaticResource database1DataSet}}"/>
+        <CollectionViewSource x:Key="vAPTableViewSource" Source="{Binding VAPTable, Source={StaticResource database1DataSet}}"/>
+        <CollectionViewSource x:Key="vehicleTypeViewSource" Source="{Binding VehicleType, Source={StaticResource database1DataSet}}"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource passReciptDetailsViewSource}">
+        <Grid Margin="20,17,10,10">
+            <Grid Margin="615,0,0,0" HorizontalAlignment="Left" Width="235">
+                <Label Content="Number Plate" HorizontalAlignment="Left" Margin="0,0,0,181" VerticalAlignment="Bottom" HorizontalContentAlignment="Right"/>
+                <TextBox x:Name="txtNumberPlate" HorizontalAlignment="Left" Height="23" Margin="86,0,0,182" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120" />
+                <Label Content="Pass Type" HorizontalAlignment="Left" Margin="20,0,0,155" VerticalAlignment="Bottom"/>
+                <Label Content="Vehicle Type" HorizontalAlignment="Left" Margin="6,0,0,116" VerticalAlignment="Bottom"/>
+                <Label Content="Total Rs:" HorizontalAlignment="Left" Margin="22,0,0,69" VerticalAlignment="Bottom" Height="36" FontSize="18" FontWeight="Bold"/>
+                <TextBox x:Name="txtPrice" HorizontalAlignment="Left" Height="33" Margin="104,0,0,69"  TextWrapping="Wrap" VerticalAlignment="Bottom" Width="102" GotFocus="txtPrice_GotFocus" IsEnabled="False" FontSize="18" FontWeight="Bold" IsReadOnly="True" IsUndoEnabled="False" Foreground="Red"/>
+                <ComboBox x:Name="tollAreaComboBox" DisplayMemberPath="Locality" ItemsSource="{Binding Source={StaticResource tollAreaViewSource}}" Margin="81,0,0,265" SelectedValuePath="PostalCode" Height="29" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="138">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+                <ComboBox x:Name="passTypeComboBox" DisplayMemberPath="PassType" ItemsSource="{Binding Source={StaticResource passTypeViewSource}}" Margin="88,0,0,147" SelectedValuePath="Id" SelectionChanged="passTypeComboBox_SelectionChanged" HorizontalAlignment="Left" Width="131" Height="30" VerticalAlignment="Bottom">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+                <Button x:Name="btnNxt" Content="Next Vehicle" Margin="0,0,11,0" VerticalAlignment="Bottom" Height="55" Click="btnNxt_Click" HorizontalAlignment="Right" Width="125"/>
+                <ComboBox x:Name="vehicleTypeComboBox" DisplayMemberPath="VehicleType" ItemsSource="{Binding Source={StaticResource vehicleTypeViewSource}}" Margin="88,0,0,107" SelectedValuePath="Id" HorizontalAlignment="Left" Width="131" Height="35" VerticalAlignment="Bottom">
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                </ComboBox>
+
+                <Button x:Name="btnLogout" Content="Log Out" HorizontalAlignment="Left" Margin="117,0,0,447" VerticalAlignment="Bottom" Width="102" Height="20" Click="btnLogout_Click"/>
+            </Grid>
+            <DataGrid x:Name="passReciptDetailsDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" Margin="0,0,0,12" RowDetailsVisibilityMode="VisibleWhenSelected" HorizontalAlignment="Left" Width="582">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn x:Name="passIdColumn" Header="Pass Id" Width="SizeToHeader">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding PassId}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn x:Name="dateColumn" Header="Date" Width="SizeToHeader">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding Date}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn x:Name="numberPlateColumn" Header="Number Plate" Width="SizeToHeader">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding NumberPlate}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn x:Name="expiryColumn" Header="Expiry" IsReadOnly="True" Width="SizeToHeader">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding Expiry}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn x:Name="isExpiredColumn" Header="Is Expired" IsReadOnly="True" Width="SizeToHeader">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding IsExpired}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn x:Name="vehicleTypeColumn" Header="Vehicle Type" Width="SizeToHeader">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding VehicleType}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn x:Name="priceColumn" Header="Price" Width="SizeToHeader">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding Price}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn x:Name="passTypeColumn" Header="Pass Type" Width="SizeToHeader">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding PassType}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn x:Name="postalCodeColumn" Header="Postal Code" Width="SizeToHeader">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding PostalCode}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn x:Name="localityColumn" Header="Locality" Width="SizeToHeader">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding Locality}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn x:Name="cityColumn" Header="City" Width="SizeToHeader">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding City}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn x:Name="stateColumn" Header="State" Width="SizeToHeader">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Content="{Binding State}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>

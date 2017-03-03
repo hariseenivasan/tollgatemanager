@@ -1,0 +1,43 @@
+﻿<!--Author: Sri Hari Haran Seenivasan
+    Page: Log-in Page
+    Pending activity: Management Login-->
+    <Window x:Name="wndwStart" x:Class="tollgatemanagement.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:tollgatemanagement"
+        mc:Ignorable="d"
+        Title="Toll Management System" Height="350" Width="525" Loaded="wndwStart_Loaded">
+    <Window.Resources>
+        <local:Database1DataSet x:Key="database1DataSet"/>
+        <CollectionViewSource x:Key="employeeViewSource" Source="{Binding Employee, Source={StaticResource database1DataSet}}"/>
+    </Window.Resources>
+    <Grid>
+        <Label Content="Toll Plaza Management" HorizontalAlignment="Center" Margin="142,41,106.4,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontSize="24" Width="270"/>
+        <Grid x:Name="grid1" DataContext="{StaticResource employeeViewSource}" HorizontalAlignment="Left" Margin="169,111,0,0" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="User Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+            <TextBox x:Name="txtUserName" Grid.Column="1" HorizontalAlignment="Left" Height="24" Margin="2.6,4,-0.2,4" Grid.Row="0" Text="{Binding username, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="124"/>
+        </Grid>
+        <Grid x:Name="grid2" DataContext="{StaticResource employeeViewSource}" HorizontalAlignment="Left" Margin="179,148,0,0" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Password: " Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+            <PasswordBox x:Name="txtPassword" HorizontalAlignment="Left" Height="24" Margin="69,4,0,4" Grid.Row="0"  VerticalAlignment="Center" Width="126" Grid.ColumnSpan="2"/>
+        </Grid>
+        <Button x:Name="btnSignIn" Content="Sign In" HorizontalAlignment="Left" Margin="190,185,0,0" VerticalAlignment="Top" Width="184" Click="btnSignIn_Click"/>
+
+    </Grid>
+</Window>

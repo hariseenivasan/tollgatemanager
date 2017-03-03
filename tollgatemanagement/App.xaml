@@ -1,0 +1,14 @@
+﻿<!--Author: Sri Hari Haran Seenivasan
+    Description: A toll Management application
+    Pending activity: UX classes must have a common abstractwindow class which must contain app context
+    Management console for managers and upper authority to give a dashboard view of the tolls collected.
+    Number plate parsing to understand which type of vehicles comes in the route and what are frequent vehicles-->
+<Application x:Class="tollgatemanagement.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:tollgatemanagement"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
